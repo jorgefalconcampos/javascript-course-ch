@@ -1,31 +1,39 @@
 
 /** *
- Problema: El usuario debe seleccionar cuántas veces quiere que se riegue el jardín.
- Se debe regar al menos 1 vez y máximo 3 veces por día.
+ Problema: El usuario puede agregar al carrito uno o varios artículos, y se debe mostrar
+ el total de todos los artículos
  * */ 
 
-const MENSAJE = "Ingresa el número de veces que quieres regar";
+const IVA = 16;
+let articulos = [];
+let total = 0;
 
-let input = parseInt(prompt(MENSAJE, 0));
-
-if (input > 3) {
-    alert("No puedes regar más de 3 veces en un día.")
+function Articulo(id, sku, nombre, precio, impuestos, descripcion){
+    this.id = id;
+    this.sku = sku;
+    this.nombre = nombre;
+    this.precio = precio;
+    this.impuestos = impuestos;
+    this.descripcion = descripcion;
 }
 
-switch(input) {
-    case 0:
-        input = parseInt(prompt(`${MENSAJE} - Recuerda que debe ser al menos 1 vez al día.`));
-    break;
-
-    case 1: case 2: case 3:
-        alert(`Genial. Número de veces a regar: ${input}`);
-        for(i=0; i<input; i++){
-            console.log("Regando... ");
-            console.log(`El riego #${i+1} se ha completado.`)
-        }
-    break;
-    
-    default:
-        console.log("Error.") 
-    break;
+function Carrito(articulos, tieneDescuento, descuento) {
+    this.articulos = articulos;
+    this.tieneDescuento = tieneDescuento;
+    this.descuento = descuento;
 }
+
+let articulo_1 = new Articulo(123, "P00JHDGNB132", "Alebrije de león", 100, IVA, "Alebrije de Oaxaca hecho a mano, tallado en madera  y pintado con finos detalles.")
+let articulo_2 = new Articulo(487, "AP826MSNDGN2", "Alebrije de toro", 320, IVA, "Alebrije hecho a mano, tallado en madera  y pintado con colores brillantes.")
+
+articulos.push(articulo_1, articulo_2);
+
+const carrito1 = new Carrito(articulos, true, 5);
+
+console.log(carrito1);
+
+for(let item=0; item<articulos.length; item++){
+    total += articulos[item].precio;
+}
+
+console.log(total);
