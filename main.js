@@ -4,12 +4,12 @@
  el total de todos los artículos
  * */ 
 
-
-
 const IVA = 16;
 let articulos_disponibles = [];
 let articulos = []; // articulos que el usuario agrega al carrito
 let total = 0;
+let terminar = false;
+
 
 class Articulo {
     constructor(id, sku, nombre, precio, impuestos, descripcion) {
@@ -69,23 +69,34 @@ function preguntarCliente() {
     }
 
     
-    const carrito = new Carrito(articulos, false, 0);
+    const carrito = new Carrito(articulos, false, 0); // no crear un nuevo carrito, si no verificar si existe uno y agregarlo
     
     alert("Tu carrito se ve así hasta ahora: ");
+
+    console.log(carrito)
 
     for(let art=0; art<carrito["articulos"].length; art++){
         alert(JSON.stringify(carrito["articulos"][art]));
     }
 
-    for(let item=0; item<articulos.length; item++){
-        total += articulos[item].precio;
+    total = 0; // solucionado "reiniciando" el total
+
+    for(let item=0; item<carrito["articulos"].length; item++){
+        total += carrito["articulos"][item].precio; // una vez reiniciado, se hace la suma
     }
 
     alert("Tu total es de: " + total)
 
+    terminar = JSON.parse(prompt("¿Deseas finalizar? (escribe 'false' sin comillas para agregar otro, o 'true' para finalizar)"));
 
 }
 
 let nombre = prompt("¡Hola! ¿Me puedes dar tu nombre?");
 alert(`Hola ${nombre}, estamos encantados de tenerte en nuestra tienda.`)
-preguntarCliente();
+
+
+while(terminar === false) {
+    preguntarCliente();
+}
+
+
